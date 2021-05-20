@@ -1,7 +1,8 @@
 <template>
   <div id="main-tab-bar">
-    <keep-alive exclude="Detail"><router-view></router-view></keep-alive>
-    <tab-bar>
+    <keep-alive ><router-view :key="key"></router-view></keep-alive>
+    <!-- 排除不显示的tabbar的页面 -->
+    <tab-bar v-show="$route.name !== 'Detail'"> 
       <tab-bar-item :path="'/home'">
         <img slot="item-icon" src="~assets/images/tabbar/home.svg" alt="" />
         <img
@@ -54,6 +55,11 @@ export default {
   components: {
     TabBar,
     TabBarItem
+  },
+  computed: {
+    key() {
+      return this.$route.name != undefined ? this.$route.name + this.$route.path  : this.$route + new Date()
+    }
   }
 };
 </script>

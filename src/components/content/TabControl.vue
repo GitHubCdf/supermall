@@ -19,12 +19,18 @@ export default {
       default() {
         return ['左边','中间', '右侧']
       }
-    }
+    },
+    alive: Number
   },
   methods: {
     tabClick(index) {
       this.currentIndex = index;
       this.$emit('tabClick', index)
+    }
+  },
+  watch: {
+    alive() {
+      this.currentIndex = this.alive
     }
   }
 

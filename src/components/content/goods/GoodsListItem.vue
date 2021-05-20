@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item" @click="itemClick">
-    <img :src="goodsitem.show.img" alt="" />
+    <img :src="getImage()" alt="" />
     <div>
       <p>{{ goodsitem.title }}</p>
       <span class="price">￥{{ goodsitem.price }}</span>
@@ -11,6 +11,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      iid: '1m7jj7a'  //模拟从详情页 推荐商品跳转 给一个默认iid
+    }
+  },
   props: {
     goodsitem: {
       type: Object,
@@ -21,9 +26,15 @@ export default {
   },
   methods: {
     itemClick() {
-      this.$router.push('/detail/' + this.goodsitem.iid)
-    }
-  }
+      // this.$router.push("/detail/" + this.goodsitem.iid) 
+      this.goodsitem.iid 
+      ? this.$router.push("/detail/" + this.goodsitem.iid) 
+      : this.$router.push("/detail/" + this.iid);
+    },
+    getImage() {
+      return this.goodsitem.show ? this.goodsitem.show.img :this.goodsitem.image;
+    },
+  },
 };
 </script>
 
@@ -57,26 +68,24 @@ export default {
 .goods-item .price {
   padding: 5px 10px;
   font-size: 14px;
-  color: #F00
+  color: #f00;
 }
 
 .goods-item .cfav {
   font-size: 14px;
   position: relative;
   padding: 0px 5px 0 16px;
-
 }
 
 .goods-item .cfav::before {
   position: absolute;
   top: 0;
   left: 0;
-  content: '';
+  content: "";
   display: inline-block;
   width: 14px;
   height: 14px;
-  background: url('~assets/images/common/collect.svg');
+  background: url("~assets/images/common/collect.svg");
   background-size: 14px;
-  
 }
 </style>
