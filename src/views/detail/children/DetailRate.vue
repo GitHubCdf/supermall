@@ -1,11 +1,11 @@
 <template>
-  <div v-if="Object.keys(itemRate).length !== 0" class="detail-rate">
+  <div v-if="Object.keys(itemRate).length !== 0 && temRate.list.length > 0" class="detail-rate">
     <div class="rate" v-for="rate in itemRate.list" :key="rate.rateId">
       <a href="javascript;" class="user">
         <img :src="rate.user.avatar" alt="" />
         <span>{{ rate.user.uname }}</span>
       </a>
-      <div class="content">
+      <div  class="content">
         <p>{{ rate.content }}</p>
         <p :class="{hiddenContent: isHidden}"  @click="showMore">
           {{ rate.explain }}
@@ -14,6 +14,9 @@
         <p class="style">{{ rate.style }}</p>
       </div>
     </div>
+  </div>
+  <div class="null-rate" v-else >
+    暂时没有评论信息~~~
   </div>
 </template>
 
@@ -43,6 +46,11 @@ export default {
 <style scoped>
 .detail-rate {
   padding: 20px 0;
+}
+.null-rate {
+  padding: 20px 10px;
+  text-align: center;
+  color: #999;
 }
 .user {
   padding: 0 5px;

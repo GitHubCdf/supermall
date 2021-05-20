@@ -13,6 +13,8 @@
       <detail-rate ref="rate" :itemRate="itemRate"></detail-rate>
       <goods-list ref="recom" :goods="detailRecommend"></goods-list>
     </scroll>
+    <back-top v-show="isShowBackTop" @click.native="backTop"></back-top>
+    <detail-bar></detail-bar>
   </div>
 </template>
 
@@ -25,7 +27,9 @@ import Scroll from "components/common/scroll/Scroll";
 import DetailInfo from "./children/DetailInfo";
 import DetailItemInfo from "./children/DetailItemInfo";
 import GoodsList from "components/content/goods/GoodsList";
-import DetailRate from './children/DetailRate'
+import DetailRate from "./children/DetailRate";
+import BackTop from "components/content/BackTop";
+import DetailBar from "./children/DetailBar"
 
 // 导入方法
 import { getDetailData, getRecommendData, Goods } from "network/detail";
@@ -41,7 +45,9 @@ export default {
     DetailInfo,
     DetailItemInfo,
     GoodsList,
-    DetailRate
+    DetailRate,
+    BackTop,
+    DetailBar
   },
   data() {
     return {
@@ -54,6 +60,7 @@ export default {
       detailRecommend: [],
       itemRate: {},
       isAlive: 0,
+      isShowBackTop: false,
     };
   },
   methods: {
@@ -80,19 +87,29 @@ export default {
 
           break;
       }
-      this.$refs.scroll.scrollTo(0,-height,0)
+      this.$refs.scroll.scrollTo(0, -height, 0);
     },
+
     tabChange(pos) {
-      if(pos.y <= -this.$refs.recom.$el.offsetTop) {
+      //设置tab
+      if (pos.y <= -this.$refs.recom.$el.offsetTop) {
         this.isAlive = 3;
       } else if (pos.y <= -this.$refs.rate.$el.offsetTop) {
         this.isAlive = 2;
       } else if (pos.y <= -this.$refs.params.$el.offsetTop) {
-        this.isAlive = 1;       
+        this.isAlive = 1;
       } else {
         this.isAlive = 0;
       }
-    }
+      //back top
+      pos.y < -1000
+        ? (this.isShowBackTop = true)
+        : (this.isShowBackTop = false);
+    },
+    //
+    backTop() {
+      this.$refs.scroll.scrollTo(0, 0);
+    },
   },
 
   created() {
@@ -111,13 +128,12 @@ export default {
       );
       this.detailInfo = data.detailInfo;
       this.itemParams = data.itemParams;
-      this.itemRate = data.rate
+      this.itemRate = data.rate;
     });
     getRecommendData().then((response) => {
       this.detailRecommend = response.data.list;
     });
   },
-  
 };
 </script>
 
@@ -132,9 +148,12 @@ export default {
   top: 44px;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 49px;
 }
 .vender {
   border-bottom: 8px solid #eee;
+}
+.back-top {
+  bottom: 5px;
 }
 </style>

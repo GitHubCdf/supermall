@@ -6,6 +6,7 @@
         class="tab-display"
         :titles="['流行', '新款', '精选']"
         @tabClick="tabClick"
+        ref="tab1"
       ></tab-control>
     <scroll
       class="content"
@@ -18,7 +19,7 @@
       <recommend :recommends="recommend"></recommend>
       <future-view></future-view>
       <tab-control
-        ref="tab"
+        ref="tab2"
         :titles="['流行', '新款', '精选']"
         @tabClick="tabClick"
       ></tab-control>
@@ -83,16 +84,18 @@ export default {
           this.currentType = "sell";
           break;
       }
+      this.$refs.tab1.currentIndex = index
+      this.$refs.tab2.currentIndex = index
     },
     backTop() {
       this.$refs.scroll.scrollTo(0, 0);
     },
     scroll(position) {
-      // console.log(this.$refs.tab.$el.offsetTop)
+      
       Math.abs(position.y) > 1000
         ? (this.isShowBackTop = true)
         : (this.isShowBackTop = false);
-      Math.abs(position.y + 44) < this.$refs.tab.$el.offsetTop
+      Math.abs(position.y + 44) < this.$refs.tab2.$el.offsetTop
         ? (this.isShowTabControl = false)
         : (this.isShowTabControl = true);
     },
