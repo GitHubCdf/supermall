@@ -1,6 +1,6 @@
 <template>
   <div id="main-tab-bar">
-    <keep-alive ><router-view :key="key"></router-view></keep-alive>
+    <keep-alive include="Home"><router-view ></router-view></keep-alive>
     <!-- 排除不显示的tabbar的页面 -->
     <tab-bar v-show="$route.name !== 'Detail'"> 
       <tab-bar-item :path="'/home'">

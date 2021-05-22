@@ -44,6 +44,7 @@ import BackTop from "components/content/BackTop";
 import { getHomeMultidata, getHomeGoods } from "network/home";
 
 export default {
+  name: 'Home',
   data() {
     return {
       banner: [],

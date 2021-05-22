@@ -1,5 +1,5 @@
 <template>
-  <div v-if="Object.keys(itemRate).length !== 0 && temRate.list.length > 0" class="detail-rate">
+  <div v-if="Object.keys(itemRate).length !== 0 && itemRate.list.length > 0" class="detail-rate">
     <div class="rate" v-for="rate in itemRate.list" :key="rate.rateId">
       <a href="javascript;" class="user">
         <img :src="rate.user.avatar" alt="" />

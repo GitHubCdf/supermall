@@ -1,7 +1,7 @@
 <template>
   <div id="detail">
     <detail-nav @tabClick="jump" :alive="isAlive"></detail-nav>
-    <scroll class="content" ref="scroll" @scroll="tabChange">
+    <scroll class="content" ref="scroll" @scroll="tabChange" :probeType="3">
       <detail-swiper :banner="topImages"></detail-swiper>
       <detail-base-info :goods="goods"></detail-base-info>
       <detail-vender class="vender" :venderInfo="venderInfo"></detail-vender>
@@ -14,7 +14,7 @@
       <goods-list ref="recom" :goods="detailRecommend"></goods-list>
     </scroll>
     <back-top v-show="isShowBackTop" @click.native="backTop"></back-top>
-    <detail-bar></detail-bar>
+    <detail-bar @addCart="addCart"></detail-bar>
   </div>
 </template>
 
@@ -89,7 +89,19 @@ export default {
       }
       this.$refs.scroll.scrollTo(0, -height, 0);
     },
+    addCart() {
+      let info = {}
+      info.image = this.topImages[0]
+      info.title = this.goods.title;
+      info.iid = this.goods.iid;
+      info.desc = this.goods.desc;
+      info.price = this.goods.realPrice
+      info.count = 1
 
+      this.$store.dispatch('addCart', info).then((msg) => {
+        this.$toast.show(msg,1500)
+      });
+    },
     tabChange(pos) {
       //设置tab
       if (pos.y <= -this.$refs.recom.$el.offsetTop) {
@@ -113,12 +125,14 @@ export default {
   },
 
   created() {
-    console.log(this.$route);
+    console.log(1)
+    // console.log(this.$route);
     //1.获取iid
     this.iid = this.$route.params.iid;
     // 2.请求数据
     getDetailData(this.iid).then((response) => {
       const data = response.result;
+      // console.log(data)
       this.topImages = data.itemInfo.topImages;
       this.venderInfo = data.shopInfo;
       this.goods = new Goods(

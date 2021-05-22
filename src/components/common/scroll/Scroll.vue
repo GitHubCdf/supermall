@@ -43,7 +43,7 @@ export default {
       click: true,
       observeDOM: true,
       observeImage: true,
-      probeType: 3,
+      probeType: this.probeType,
       pullUpLoad: this.pullUpLoad
 
     });

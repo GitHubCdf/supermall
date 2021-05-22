@@ -10,7 +10,6 @@ const routes = [
   },
   {
     path: '/home',
-    name: 'Home',
     component: () => import('views/home/home')
   },
   {
@@ -29,7 +28,6 @@ const routes = [
     component: () => import('views/profile/profile')
   },
   {
-    name: 'Detail',
     path: '/detail/:iid',
     component: () => import('views/detail/Detail')
   }
